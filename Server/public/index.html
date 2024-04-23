@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IR Sensor Data</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <h1>IR Sensor Data:</h1>
+  <label id="sensorValue">Waiting for data...</label>
+
+  <script>
+    $(document).ready(function() {
+      setInterval(function() {
+        $.get('/sensor', function(data) {
+          $('#sensorValue').text('Sensor Value: ' + data);
+        });
+      }, 1000); // Update every second
+    });
+  </script>
+</body>
+</html>
