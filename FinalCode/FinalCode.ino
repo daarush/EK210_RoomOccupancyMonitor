@@ -32,10 +32,7 @@ void setup() {
 
 void loop() {
 
-  if (BTserial.available()) {
-    String recievedData = BTserial.readStringUntil('\n');
-    maxOccupancy = recievedData.toInt();
-  }
+  updateData();
 
   float distance1 = readSensorValue(pin1);
   float distance2 = readSensorValue(pin2);
@@ -48,23 +45,17 @@ void loop() {
         delay(motorDown);  
         digitalWrite(motorSensor, LOW);
         Serial.println("Motor Down");
-        //Debugging
-        // Serial.print("maxOccupancy: ");
-        // Serial.print(maxOccupancy);
-        // Serial.println();
       } else {
         counter++;
       }
 
-      BTserial.print(counter);  //sends the data to bluetooth
-      // BTserial.print(maxOccupancy);
+      // BTserial.print(counter);  //sends the data to bluetooth
       Serial.println(counter);
     }
   }
 
 
   if ((distance2 <= upperDistanceThreshold) && (distance2 >= lowerDistanceThreshold)) {
-    // Serial.println(distance2);
     if ((prev_distance2 - distance2 <= minDistanceChanged)) {
       if (counter >= maxOccupancy) {
         Serial.println("Motor Up");
@@ -79,8 +70,7 @@ void loop() {
         counter--;
       }
 
-      BTserial.print(counter);
-      // BTserial.print(maxOccupancy);
+      // BTserial.print(counter);
       Serial.println(counter);
     }
   }
@@ -90,6 +80,14 @@ void loop() {
   prev_distance2 = distance2;
 
   delay(10);
+}
+
+void updateData() {
+  if (BTserial.available()) {
+    String recievedData = BTserial.readStringUntil('\n');
+    maxOccupancy = recievedData.toInt();
+    BTserial.print(counter);
+  }
 }
 
 float readSensorValue(int pin) {
