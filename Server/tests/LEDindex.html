@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bluetooth Color Sender</title>
+</head>
+<body>
+    <h1>Send Color Commands over Bluetooth</h1>
+    <button id="redButton">Send Red</button>
+    <button id="greenButton">Send Green</button>
+    <button id="blueButton">Send Blue</button>
+
+    <script>
+        // Function to send color command to the server
+        function sendColorCommand(color) {
+            fetch('/send-color', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ color }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log(`Successfully sent ${color} command.`);
+                } else {
+                    console.error(`Error sending ${color} command.`);
+                }
+            })
+            .catch(error => console.error(`Error: ${error}`));
+        }
+
+        // Add event listeners to buttons
+        document.getElementById('redButton').addEventListener('click', () => sendColorCommand('red'));
+        document.getElementById('greenButton').addEventListener('click', () => sendColorCommand('green'));
+        document.getElementById('blueButton').addEventListener('click', () => sendColorCommand('blue'));
+    </script>
+</body>
+</html>

@@ -1,21 +1,34 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>IR Sensor Data</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
-  <h1>IR Sensor Data:</h1>
-  <label id="sensorValue">Waiting for data...</label>
 
-  <script>
-    $(document).ready(function() {
-      setInterval(function() {
-        $.get('/sensor', function(data) {
-          $('#sensorValue').text('Sensor Value: ' + data);
-        });
-      }, 1000); // Update every second
-    });
-  </script>
+<head>
+    <title>Occupancy Status</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+    <div class="frame">
+        <h1>Occupancy Status Page</h1>
+        <div class="occupancyModule">
+            <div class="status" id="status">Status</div>
+            <div class="module">
+                <div class="current" id="currentOccupancy">0</div>
+                <div class="outOF">out of</div>
+                <div class="max">100</div> <!-- default max occupancy -->
+            </div>
+            <div class="currentOccupancy">CURRENT OCCUPANCY</div>
+        </div>
+    </div>
+
+    <div class="tools">
+        <div class="title">Adjust Room Occupancy</div>
+        <input type="text" id="occupancy" placeholder="Set Max Occupancy">
+        <button id="setOccupancy">Set Occupancy</button>
+    </div>
+
+
+    <script src="app.js">
+    </script>
 </body>
+
 </html>
