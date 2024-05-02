@@ -22,6 +22,18 @@ body {
     background-color: #111;
     border-radius: 10px;
     padding: 30px;
+    background: linear-gradient(135deg, #111 0%, #272727 100%);
+    opacity: 0; /* Start with 0 opacity */
+    animation: fadeIn 1s forwards; /* Add fade-in animation */
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 h1 {
@@ -58,6 +70,11 @@ h1 {
     width: 150px;
     padding: 20px;
     border: 5px #0af solid;
+    transition: transform 0.5s, background-color 0.3s; /* Add transition */
+}
+
+.module:hover {
+    transform: scale(1.05); 
 }
 
 .current,
@@ -80,6 +97,11 @@ h1 {
     background-color: #111;
     border-radius: 10px;
     padding: 20px;
+    transition: transform 0.5s ease;
+}
+
+.tools:hover {
+    transform: translateY(-3px); 
 }
 
 .title {
@@ -111,6 +133,8 @@ button {
 
 button:hover {
     background-color: #ff8400;
+    color: #000; /* Add color transition */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Add color transition */
 }
 
 input:focus,
