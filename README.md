@@ -28,7 +28,6 @@ Although it sounds simple stuff, it took a lot of time and exploring since this 
 
 Code 
 --
-As mentioned before, there are folders representing each components and lots of tests.
-The code in each folder should have some explanations. 
+The Test Code directories contain all the prototype codes as well as each component being testes.
 
   
