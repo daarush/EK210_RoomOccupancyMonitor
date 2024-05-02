@@ -1,6 +1,7 @@
 #include <SoftwareSerial.h>
 
 SoftwareSerial BTserial(10, 11); // Setup of Bluetooth module on pins 10 (TXD) and 11 (RXD);
+https://www.hackster.io/leevinentwilson/bluetooth-node-and-arduino-de822e
 
 void setup() {
   BTserial.begin(9600); // Bluetooth at baud 9600 for talking to the node server
