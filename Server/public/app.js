@@ -1,6 +1,9 @@
 // Keep track of connected clients
 const clients = [];
 
+// Connect to WebSocket server
+const ws = new WebSocket('ws://10.239.156.6:8080'); // Replace YOUR_SERVER_IP with your server's external IP address
+
 // Function to send color command to the server
 function sendNewOccupancy(occupancy) {
     fetch('/changeOccupancy', {
@@ -23,15 +26,20 @@ function sendNewOccupancy(occupancy) {
 // Add event listeners to buttons
 document.getElementById('setOccupancy').addEventListener('click', () => {
     const occupancy = document.getElementById('occupancy').value;
-    sendNewOccupancy(occupancy);
+    var password = document.getElementById('password').value;
 
-    const max = document.querySelector('.max');
-    max.innerHTML = occupancy;
+    if (password == "password") {
+        sendNewOccupancy(occupancy);
+        const max = document.querySelector('.max');
+        max.innerHTML = occupancy;
+
+        document.getElementById('occupancy').value = "";
+        document.getElementById('password').value = "";
+    } else {
+        alert("Incorrect Password");
+    }
 });
 
-
-// Connect to WebSocket server
-const ws = new WebSocket('ws://10.239.156.6:8080'); // Replace YOUR_SERVER_IP with your server's external IP address
 
 ws.onopen = function () {
     console.log('WebSocket connection established.');
@@ -39,9 +47,15 @@ ws.onopen = function () {
 
 ws.onmessage = function (event) {
     const parsedData = JSON.parse(event.data);
-    console.log('Received data from WebSocket:', parsedData);
-    console.log('Updating UI with data:', parsedData);
-    updateUI(parsedData);
+
+    if (parsedData.type === 'occupancy') {
+        document.querySelector('.max').innerText = parsedData.data;
+    } else {
+        console.log('Received data from WebSocket:', parsedData);
+        console.log('Updating UI with data:', parsedData);
+        updateUI(parsedData);
+    }
+
 };
 
 function updateUI(data) {

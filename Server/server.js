@@ -1,17 +1,16 @@
-// Website used: https://www.hackster.io/leevinentwilson/bluetooth-node-and-arduino-de822e
-
 const express = require('express');
 const path = require('path');
-const bluetoothSerial = require('bluetooth-serial-port'); // Include Bluetooth serial library
-const btSerial = new bluetoothSerial.BluetoothSerialPort();
+const bluetoothSerial = require('bluetooth-serial-port');
 const WebSocket = require('ws');
+
 const wss = new WebSocket.Server({ port: 8080 });
+const btSerial = new bluetoothSerial.BluetoothSerialPort();
+const btModuleName = 'HC-05';
 
 const app = express();
 const PORT = 3000;
-const btModuleName = 'HC-05'; 
 
-app.use(express.static(path.join(__dirname, 'public'))); 
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Function to send data over Bluetooth
 function sendBluetoothData(d) {
@@ -30,6 +29,13 @@ app.post('/changeOccupancy', express.json(), (req, res) => {
     const { occupancy } = req.body;
     sendBluetoothData(occupancy);
     res.status(200).send(`Sent ${occupancy}`);
+    
+    wss.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+            console.log('Sending data to WebSocket clients:', occupancy);
+            client.send(JSON.stringify({type: 'occupancy', data: occupancy}));
+        }
+    });
 });
 
 // Callback function to handle data received from the Bluetooth device
@@ -65,6 +71,7 @@ function connectToBluetoothDevice() {
                 });
             }, (err) => {
                 console.error('Error finding channel:', err);
+                console.log("Check if Bluetooth is ON");
             });
         } else {
             console.log('Found device:', name, 'but not connecting.');
