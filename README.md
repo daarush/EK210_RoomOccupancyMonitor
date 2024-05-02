@@ -23,6 +23,9 @@ To get the whole project working and synced, first I tested every component on i
     1. Establishing a connection between a nodejs server and the ardiuno
     2. sending and reciveing information between the ardiuno and server
     3. updating the components on both ends
+  
+For more information as well as how I was able to set it up, use this website: [Bluetooth, Node and Arduino](https://www.hackster.io/leevinentwilson/bluetooth-node-and-arduino-de822e)
+
 
 Although it sounds simple stuff, it took a lot of time and exploring since this topic was new. 
 
