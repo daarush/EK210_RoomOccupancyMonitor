@@ -2,7 +2,8 @@
 const clients = [];
 
 // Connect to WebSocket server
-const ws = new WebSocket('ws://10.239.156.6:8080'); // Replace YOUR_SERVER_IP with your server's external IP address
+const ws = new WebSocket('ws://YOUR_SERVER_IP:8080'); // Replace YOUR_SERVER_IP with your server's external IP address
+//use ip config to get the ip address of the server
 
 // Function to send color command to the server
 function sendNewOccupancy(occupancy) {
